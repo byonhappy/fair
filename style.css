@@ -9,17 +9,9 @@ a{color:var(--brand);text-decoration:none} a[aria-disabled="true"]{opacity:.6;po
 /* Header */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid rgba(15,23,42,.06)}
 .header-inner{padding:10px 0}
-.header-grid{
-  display:grid;
-  grid-template-columns:auto 1fr auto; /* 좌:스페이서, 중:제목, 우:로고 */
-  align-items:center;
-  column-gap:12px;
-}
-.header-spacer{min-width:56px} /* 로고 폭만큼 공간 확보해 제목이 정확히 가운데로 */
-.brand-right{display:inline-flex;align-items:center;justify-content:flex-end;padding-right:6px;margin-right:2px}
-.brand-right img{display:block;height:44px;width:auto}
+.header-grid{display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:12px}
+.header-spacer{min-width:56px}
 
-/* 중앙 큰 제목 */
 .site-title{
   margin:0;text-align:center;
   font-family:"Black Han Sans", system-ui, -apple-system, "Noto Sans KR", sans-serif;
@@ -72,13 +64,4 @@ h2{margin:0 0 12px;font-size:clamp(20px,3vw,28px)} .muted{color:var(--muted)} .s
 .event-image{width:100%;height:auto;border-radius:16px;border:1px solid rgba(15,23,42,.08);background:var(--card)}
 
 /* Footer */
-.site-footer{border-top:1px solid rgba(15,23,42,.06);padding:18px 0;margin-top:24px}
-.footer-inner{display:flex;justify-content:center;align-items:center;gap:10px}
-
-/* Mobile */
-@media (max-width:640px){
-  .btn{--btn-pad:10px 12px;font-size:14px}
-  .cta-stack{top:12px;right:12px;gap:8px;padding:8px}
-  .site-title{font-size:clamp(18px,4.6vw,34px)}
-  .header-spacer{min-width:44px}
-}
+.site-footer{border-top:1px solid rgba(15,23,42,.06);padding:18px 0
