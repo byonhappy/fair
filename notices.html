@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" data-page="notices">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>공지사항 • 부여 온世進 행복교육 박람회</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="container header-inner header-grid">
+      <div class="header-spacer" aria-hidden="true"></div>
+      <h1 class="site-title"><span>부여</span> <span class="world">온世進</span> <span>행복교육 박람회</span></h1>
+      <a class="brand-right" href="index.html" aria-label="홈">
+        <img src="images/부여교육지원청.png" alt="부여교육지원청 로고" height="44" />
+      </a>
+    </div>
+    <nav class="tabs" aria-label="상단 탭">
+      <a href="index.html" data-tab="home">홈</a>
+      <a href="notices.html" data-tab="notices">공지사항</a>
+      <a href="events.html" data-tab="events">행사일정</a>
+      <a href="contact.html" data-tab="contact">문의</a>
+    </nav>
+  </header>
+
+  <main id="main" class="section">
+    <div class="container">
+      <h2>공지사항</h2>
+      <p class="muted">여기에 공지 목록이 표시됩니다. (나중에 내용 채우기)</p>
+      <div class="toolbar">
+        <input id="noticeSearch" type="search" placeholder="공지 검색 (예: 로봇, 연수)" aria-label="공지 검색" />
+        <select id="noticeFilter" aria-label="분류 필터">
+          <option value="">전체 분류</option>
+          <option value="교직원">교직원</option>
+          <option value="학생">학생</option>
+          <option value="학부모">학부모</option>
+        </select>
+      </div>
+      <div id="noticeList" class="cards" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>© 충청남도교육청부여교육지원청</small>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
