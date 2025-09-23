@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko" data-page="results">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>신청결과 • 부여 ON세진 행복교육 박람회</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="container header-inner header-grid">
+      <div class="header-spacer" aria-hidden="true"></div>
+      <h1 class="site-title"><span>부여</span> <span class="world">ON세진</span> <span>행복교육 박람회</span></h1>
+      <div class="header-spacer" aria-hidden="true"></div>
+    </div>
+    <nav class="tabs" aria-label="상단 탭">
+      <a href="index.html" data-tab="home">홈</a>
+      <a href="인사말씀.html" data-tab="notices">인사말씀</a>
+      <a href="교실설명.html" data-tab="classes">교실설명</a>
+      <a href="신청방법.html" data-tab="howto">신청방법</a>
+      <a href="행사일정.html" data-tab="events">행사일정</a>
+      <a href="신청결과.html" data-tab="results">신청결과</a>
+      <a href="행사장안내.html" data-tab="venue">행사장 안내</a>
+      <a href="문의.html" data-tab="contact">문의</a>
+    </nav>
+  </header>
+
+  <main id="main" class="section">
+    <div class="container">
+      <h2>신청결과</h2>
+      <p class="muted">아래 정보를 입력하면 개인 시간표가 표시됩니다. (운영 데이터는 <code>data/timetable.csv</code>에 업로드하세요.)</p>
+
+      <form id="lookupForm" class="lookup-form" autocomplete="off">
+        <input type="text" id="school" placeholder="학교" required />
+        <input type="text" id="grade" placeholder="학년 (예: 6)" required />
+        <input type="text" id="class" placeholder="반 (예: 3)" required />
+        <input type="text" id="name" placeholder="이름 (예: 홍길동)" required />
+        <button type="submit" class="btn btn-primary">시간표 조회</button>
+        <button type="button" id="resetBtn" class="btn btn-ghost">초기화</button>
+      </form>
+
+      <div id="resultArea" class="cards" aria-live="polite"></div>
+
+      <details class="muted" style="margin-top:12px">
+        <summary>CSV 형식 안내 & 샘플</summary>
+        <p>CSV 파일 경로: <code>data/timetable.csv</code><br/>
+        헤더(첫 줄) 예시: <code>school,grade,class,name,slot,time,activity,room</code></p>
+        <pre class="code">
+school,grade,class,name,slot,time,activity,room
+충남교육청,6,1,홍길동,1,09:00-09:30,로봇 체험,A-1
+충남교육청,6,1,홍길동,2,09:40-10:10,드론 시뮬,A-3
+충남교육청,6,1,김하늘,1,09:00-09:30,드로잉,B-2
+        </pre>
+        <p>헤더는 한글(<code>학교,학년,반,이름,교시,시간,활동,교실</code>)로 올려도 됩니다. (자동 매핑)</p>
+      </details>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="images/부여교육청로고.png" alt="충청남도부여교육지원청 로고" class="footer-logo" />
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
