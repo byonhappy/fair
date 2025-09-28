@@ -19,7 +19,7 @@
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Pretendard, system-ui, -apple-system, "Noto Sans KR", sans-serif}
 img{max-width:100%;display:block}
 
-/* ===== Hero (수정됨: 제목 영역 크기 및 디자인) ===== */
+/* ===== Hero (제목 영역 크기 최소화) ===== */
 .hero{
   /* 포스터의 배경색상 참조 및 그라데이션 조정 */
   background: linear-gradient(90deg, #37c2b5, #21cfcf); /* 배경색을 포스터 느낌으로 변경 */
@@ -54,7 +54,7 @@ img{max-width:100%;display:block}
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
-/* ===== GNB (수정됨: sticky top 위치 조정) ===== */
+/* ===== GNB (sticky top 위치 조정) ===== */
 .gnb{
   /* hero의 새 높이에 맞춰 top 위치를 재조정했습니다. */
   top: clamp(40px, 6.5vw, 60px); /* hero-inner padding과 title-1line 높이 고려 */
@@ -141,24 +141,60 @@ img{max-width:100%;display:block}
 }
 .btn-outline.lg{padding:15px 26px;font-size: clamp(16px,2vw,20px)}
 
-/* 신청 영역 */
+/* 신청 영역 (텍스트 반영 및 레이아웃 조정) */
 .apply-row{
   display:grid; 
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); /* 두 개 이상의 항목을 유연하게 배치 */
+  /* 텍스트 박스 대신 버튼만 남기기 위해 flex로 전환 또는 grid 유지 */
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); 
   gap:16px; 
   align-items:start;
-  margin-bottom: 16px; /* 행 간의 간격 추가 */
+  margin-bottom: 16px; 
 }
 .apply-row.buttons-row{
-  grid-template-columns: minmax(min-content, 260px) minmax(min-content, 260px); /* 버튼 크기 고정 */
-  justify-content: flex-start; /* 버튼을 왼쪽으로 정렬 */
+  grid-template-columns: minmax(min-content, 260px) minmax(min-content, 260px); 
+  justify-content: flex-start; 
 }
 
-.apply-card{
-  min-height:180px;border:1px dashed var(--line);border-radius:16px;background:var(--card);
-  display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700
+/* 새로 추가된 텍스트 박스 스타일 */
+.apply-text-box {
+  background: var(--card); 
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 25px 20px;
+  margin-bottom: 24px;
 }
-.placeholder{background:#f7fafc}
+.apply-text-box p {
+  line-height: 1.6;
+  font-size: clamp(14px, 1.5vw, 16px);
+  margin-bottom: 15px;
+}
+.step-title {
+  font-size: clamp(18px, 2.5vw, 24px);
+  color: var(--ink);
+  margin: 18px 0 10px;
+  font-weight: 900;
+  border-bottom: 2px solid var(--accent); /* 단계 구분을 위한 강조선 */
+  padding-bottom: 5px;
+}
+.info-list, .grade-table {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 20px 0;
+  font-size: clamp(14px, 1.4vw, 16px);
+}
+.info-list li, .grade-table li {
+  padding: 6px 0 6px 15px;
+  position: relative;
+  line-height: 1.4;
+  border-left: 3px solid var(--accent-2); /* 항목 구분을 위한 세로선 */
+  margin-bottom: 4px;
+}
+.grade-table {
+  background: #fcfcfc;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
 
 /* ===== Footer Logo ===== */
 .logo-wrap{display:flex;justify-content:center;margin-top:18px}
