@@ -1,52 +1,208 @@
 <!doctype html>
-<html lang="ko" data-page="home">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>부여 ON세진 행복교육 박람회</title>
-  <meta name="theme-color" content="#0ea5e9" />
-  <link rel="icon" href="images/opening.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <title>2025 부여 On세진 행복교육 박람회</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <a class="skip" href="#main">본문 바로가기</a>
 
-  <!-- 헤더 -->
-  <header class="site-header">
-    <div class="container header-inner header-grid">
-      <div class="header-spacer" aria-hidden="true"></div>
-      <h1 class="site-title"><span>부여</span> <span class="world">ON세진</span> <span>행복교육 박람회</span></h1>
-      <div class="header-spacer" aria-hidden="true"></div>
+  <header id="home" class="hero">
+    <div class="hero-inner">
+      <h1 class="title-1line">2025 부여 <span class="title-accent">On</span>세진 행복교육 박람회</h1>
     </div>
-
-    <!-- 탭 (한글 파일명 반영) -->
-    <nav class="tabs" aria-label="상단 탭">
-      <a href="index.html" data-tab="home">홈</a>
-      <a href="greeting.html" data-tab="notices">인사말씀</a>
-      <a href="classes.html" data-tab="classes">교실설명</a>
-      <a href="apply.html" data-tab="howto">신청방법</a>
-      <a href="schedule.html" data-tab="events">행사일정</a>
-      <a href="results.html" data-tab="results">신청결과</a>
-      <a href="venue.html" data-tab="venue">행사장 안내</a>
-      <a href="contact.html" data-tab="contact">문의</a>
-    </nav>
   </header>
 
-  <main id="main">
-    <!-- 홈: 포스터만 (상단 CTA 제거) -->
-    <section class="poster-hero" aria-label="행사 홍보 포스터">
-      <img src="images/opening.png" alt="행사 홍보 포스터" class="poster-image" loading="eager" decoding="async" />
-      <div class="poster-overlay"></div>
+  <nav id="gnb" class="gnb">
+    <ul class="gnb-list">
+      <li><a href="#opening" data-target="opening" class="gnb-link">홈</a></li>
+      <li><a href="#info" data-target="info" class="gnb-link">행사안내</a></li>
+      <li><a href="#classes" data-target="classes" class="gnb-link">교실설명</a></li>
+      <li><a href="#apply" data-target="apply" class="gnb-link">신청방법</a></li>
+      <li><a href="#schedule" data-target="schedule" class="gnb-link">행사일정</a></li>
+      <li><a href="#result" data-target="result" class="gnb-link">신청결과</a></li>
+      <li><a href="#contact" data-target="contact" class="gnb-link">문의</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section id="opening" class="section">
+      <div class="container">
+        <div class="poster-frame">
+          <img src="images/opening.jpg" alt="2025 부여 On세진 행복교육 박람회 주요 포스터" class="poster" />
+        </div>
+      </div>
     </section>
+
+    <section id="info" class="section">
+      <div class="container">
+        <h2 class="section-title">행사안내</h2>
+        <div class="poster-frame">
+          <img src="images/greeting.jpg" alt="행사 안내 포스터" class="poster" />
+        </div>
+      </div>
+    </section>
+
+    <section id="classes" class="section">
+      <div class="container">
+        <h2 class="section-title">교실설명</h2>
+
+        <div class="tree">
+
+          <details class="tree-node" open>
+            <summary class="tree-head tree-future">미래관</summary>
+            <ul class="tree-list">
+              <li>
+                <span>1실 머그 위의 명화, AI가 쓰다</span>
+                <button class="btn-ghost view-btn" data-theme="future" data-count="6" data-start="1">보기</button>
+              </li>
+              <li>
+                <span>2실 생각 똑딱! 코딩 없는 로봇 마스터</span>
+                <button class="btn-ghost view-btn" data-theme="future" data-count="6" data-start="2">보기</button>
+              </li>
+              <li>
+                <span>3실 생각이 움직이는 실험실</span>
+                <button class="btn-ghost view-btn" data-theme="future" data-count="6" data-start="3">보기</button>
+              </li>
+              <li>
+                <span>4실 Marty 로봇 댄스 교실</span>
+                <button class="btn-ghost view-btn" data-theme="future" data-count="6" data-start="4">보기</button>
+              </li>
+              <li>
+                <span>5실 AI 자율주행: 미래 모빌리티 시티 투어</span>
+                <button class="btn-ghost view-btn" data-theme="future" data-count="6" data-start="5">보기</button>
+              </li>
+              <li>
+                <span>7실 스마트 체육실: 뛰Go! 즐기Go!</span>
+                <button class="btn-ghost view-btn" data-theme="future" data-count="6" data-start="7">보기</button>
+              </li>
+            </ul>
+          </details>
+
+          <details class="tree-node">
+            <summary class="tree-head tree-happiness">행복관</summary>
+            <ul class="tree-list">
+              <li><span>1실 쌀 한 톨의 상상력</span>
+                <button class="btn-ghost view-btn" data-theme="happiness" data-count="6" data-start="1">보기</button></li>
+              <li><span>2실 자연의 색을 천에 담다</span>
+                <button class="btn-ghost view-btn" data-theme="happiness" data-count="6" data-start="2">보기</button></li>
+              <li><span>3실 꿀벌과 나, 함께사는 지구</span>
+                <button class="btn-ghost view-btn" data-theme="happiness" data-count="6" data-start="3">보기</button></li>
+              <li><span>4실 보는 손길, 듣는 눈길</span>
+                <button class="btn-ghost view-btn" data-theme="happiness" data-count="6" data-start="4">보기</button></li>
+              <li><span>5실 유니버설 디자이너 되기</span>
+                <button class="btn-ghost view-btn" data-theme="happiness" data-count="6" data-start="5">보기</button></li>
+              <li><span>6실(준비중) — 이미지 준비중</span>
+                <button class="btn-ghost view-btn" data-theme="happiness" data-count="6" data-start="6">보기</button></li>
+            </ul>
+          </details>
+
+          <details class="tree-node">
+            <summary class="tree-head tree-foundation">기초관</summary>
+            <ul class="tree-list">
+              <li><span>1실 VR로 떠나는 독도 여행</span>
+                <button class="btn-ghost view-btn" data-theme="foundation" data-count="4" data-start="1">보기</button></li>
+              <li><span>3실 한글 디자인, 이름이 예술이 되는 순간</span>
+                <button class="btn-ghost view-btn" data-theme="foundation" data-count="4" data-start="3">보기</button></li>
+              <li><span>4실 말놀이, 글놀이로 배우는 재미있는 한글</span>
+                <button class="btn-ghost view-btn" data-theme="foundation" data-count="4" data-start="4">보기</button></li>
+              <li><span>5실 온글과 떠나는 필사 여행</span>
+                <button class="btn-ghost view-btn" data-theme="foundation" data-count="4" data-start="5">보기</button></li>
+            </ul>
+          </details>
+
+          <details class="tree-node">
+            <summary class="tree-head tree-focus">중점관</summary>
+            <ul class="tree-list">
+              <li><span>1실 백제야, 부여에서 놀자!</span>
+                <button class="btn-ghost view-btn" data-theme="focus" data-count="4" data-start="1">보기</button></li>
+              <li><span>3실 지구를 품은 놀이 숲</span>
+                <button class="btn-ghost view-btn" data-theme="focus" data-count="4" data-start="3">보기</button></li>
+              <li><span>4실 벽돌에 담겨 있는 백제의 멋</span>
+                <button class="btn-ghost view-btn" data-theme="focus" data-count="4" data-start="4">보기</button></li>
+            </ul>
+          </details>
+
+          <details class="tree-node">
+            <summary class="tree-head tree-onclass">온수업관</summary>
+            <ul class="tree-list">
+              <li><span>1실 생성형 AI 활용 창작 수업</span>
+                <button class="btn-ghost view-btn" data-theme="on_class" data-count="5" data-start="1">보기</button></li>
+              <li><span>2실 미래씨의 초록 놀이터</span>
+                <button class="btn-ghost view-btn" data-theme="on_class" data-count="5" data-start="2">보기</button></li>
+              <li><span>3실 초등학교 교실 AI를 품다</span>
+                <button class="btn-ghost view-btn" data-theme="on_class" data-count="5" data-start="3">보기</button></li>
+              <li><span>4실 수학과 환경이 만나는 수업</span>
+                <button class="btn-ghost view-btn" data-theme="on_class" data-count="5" data-start="4">보기</button></li>
+              <li><span>5실 마음을 나누는 예절 한 모금</span>
+                <button class="btn-ghost view-btn" data-theme="on_class" data-count="5" data-start="5">보기</button></li>
+            </ul>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="apply" class="section">
+      <div class="container">
+        <h2 class="section-title">신청방법</h2>
+
+        <div class="apply-row">
+          <div class="apply-card placeholder">추후 안내 이미지</div>
+          <div class="apply-card placeholder">추후 안내 이미지</div>
+        </div>
+
+        <div class="apply-row buttons-row">
+          <a class="btn-primary lg" target="_blank"
+             href="https://docs.google.com/forms/d/e/1FAIpQLSfwTpjtMC54kYjYMaYvoJ28UezsAxDzm-OW4EZ3_XWT-l27_A/viewform?usp=header">참가신청</a>
+          <a class="btn-outline lg" target="_blank"
+             href="https://docs.google.com/spreadsheets/d/1ZxSsByN-AUJUKi-eV6TRlpgUBhIgmiV5Hdaufnq1YG4/edit?usp=sharing">신청현황</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule" class="section">
+      <div class="container">
+        <h2 class="section-title">행사일정</h2>
+        <div class="poster-frame poster-empty">
+          <p class="muted">행사일정 이미지는 추후 업로드 예정입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" class="section">
+      <div class="container">
+        <h2 class="section-title">신청결과</h2>
+        <p class="muted">학교/학년/학급 별 결과 조회는 추후 시트 연동 후 활성화됩니다.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="section-title">문의</h2>
+        <p class="contact-text">충청남도부여교육지원청 교육과 ☎ 041-830-8252</p>
+
+        <div class="logo-wrap">
+          <img src="images/logo.png" alt="충청남도부여교육지원청 로고" class="footer-logo" />
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <img src="images/logo.png" alt="충청남도부여교육지원청 로고" class="footer-logo" />
-    </div>
-  </footer>
+  <button id="btnTop" class="btn-top" aria-label="맨 위로">↑</button>
 
-  <script src="main.js" defer></script>
+  <div id="imgModal" class="modal" aria-hidden="true">
+    <div class="modal-body" role="dialog" aria-label="교실 설명 이미지">
+      <button class="modal-nav left" id="prevBtn" aria-label="이전">❮</button>
+      <img id="modalImg" alt="교실 설명 이미지" />
+      <button class="modal-nav right" id="nextBtn" aria-label="다음">❯</button>
+    </div>
+    <button class="modal-close" id="closeModal" aria-label="닫기">×</button>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>

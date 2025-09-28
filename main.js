@@ -1,157 +1,130 @@
-// ===== 링크(필요시 수정) =====
-const FORM_URL  = "https://docs.google.com/forms/d/e/1FAIpQLSfwTpjtMC54kYjYMaYvoJ28UezsAxDzm-OW4EZ3_XWT-l27_A/viewform?usp=header";
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/1i2Fib71dI_Bb1L945GchXtm-IAsxHCxRKQ-2alvm5QM/edit?usp=sharing";
-const TIMETABLE_CSV_PATH = "data/timetable.csv"; // 신청결과 CSV (추후 업로드)
+/* ===== helper: sticky height 보정 후 부드러운 스크롤 ===== */
+function getOffsets(){
+  const hero = document.querySelector('.hero');
+  const gnb  = document.querySelector('#gnb');
+  return (hero?.offsetHeight || 0) + (gnb?.offsetHeight || 0);
+}
+function smoothScrollTo(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - (document.querySelector('#gnb').offsetHeight + 8);
+  window.scrollTo({top: y, behavior: 'smooth'});
+}
 
-// ===== 현재 탭 활성화 표기 =====
-(function markActiveTab(){
-  const page = document.documentElement.getAttribute("data-page") || document.body.getAttribute("data-page");
-  document.querySelectorAll(".tabs a").forEach(a=>{
-    a.removeAttribute("aria-current");
-    if (a.dataset.tab === page) a.setAttribute("aria-current","page");
+/* ===== GNB 클릭 ===== */
+document.querySelectorAll('.gnb-link').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const target = a.getAttribute('data-target');
+    smoothScrollTo(target);
   });
-})();
+});
 
-// ===== (옵션) 예전 공지 목록 로직: 인사말씀 페이지에선 미사용 =====
-const noticeList   = document.getElementById("noticeList");
-const searchInput  = document.getElementById("noticeSearch");
-const filterSelect = document.getElementById("noticeFilter");
-let NOTICES = [];
+/* ===== Top 버튼 ===== */
+const btnTop = document.getElementById('btnTop');
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 500) btnTop.classList.add('show');
+  else btnTop.classList.remove('show');
+});
+btnTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
-async function loadNotices() {
-  if (!noticeList) return;
-  try {
-    const res = await fetch("data/notices.json", { cache: "no-cache" });
-    if (!res.ok) throw new Error("공지 로드 실패");
-    NOTICES = await res.json();
-    renderNotices();
-  } catch (err) {
-    noticeList.innerHTML = `<p class="muted">⚠️ 공지를 불러오지 못했습니다. data/notices.json을 확인해주세요.</p>`;
-    console.error(err);
-  }
+/* ===== 이미지 모달 (경로는 classroom_introduce 하위 폴더) =====
+   폴더명에 공백이 있어 반드시 URI 인코딩 필요
+   1. future      -> "1.%20future"
+   2. happiness   -> "2.%20happiness"
+   3. foundation  -> "3.%20foundation"
+   4. focus       -> "4.%20focus"
+   5. on_class    -> "5.%20on_class"
+*/
+const FOLDER = {
+  future:     "classroom_introduce/1.%20future",
+  happiness:  "classroom_introduce/2.%20happiness",
+  foundation: "classroom_introduce/3.%20foundation",
+  focus:      "classroom_introduce/4.%20focus",
+  on_class:   "classroom_introduce/5.%20on_class"
+};
+// 테마별 파일 이름 규칙 (ex. future1.jpg …)
+const FILE_PREFIX = {
+  future: "future",
+  happiness: "happiness",
+  foundation: "foundation",
+  focus: "focus",
+  on_class: "on_class"
+};
+
+const modal = document.getElementById('imgModal');
+const modalImg = document.getElementById('modalImg');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const closeBtn = document.getElementById('closeModal');
+
+let current = { theme:null, index:0, count:0, start:1 };
+
+function buildPath(theme, idx){
+  // 실제 파일 번호 = start 기준으로 회전시키기
+  const number = idx;
+  const folder = FOLDER[theme];
+  const prefix = FILE_PREFIX[theme];
+  return `${folder}/${prefix}${number}.jpg`;
 }
-function renderNotices() {
-  const q = (searchInput?.value || "").toLowerCase();
-  const f = filterSelect?.value || "";
-  const items = NOTICES
-    .filter(n => (!f || n.target === f))
-    .filter(n => (q ? (n.title + n.summary + n.tag).toLowerCase().includes(q) : true))
-    .sort((a,b) => new Date(b.date) - new Date(a.date));
-
-  noticeList.innerHTML = items.map(n => `
-    <article class="card">
-      <span class="badge">${n.target}</span>
-      <h3><a href="${n.link}" target="_blank" rel="noopener">${n.title}</a></h3>
-      <p class="meta">${new Date(n.date).toLocaleDateString('ko-KR')} • ${n.tag}</p>
-      <p>${n.summary}</p>
-    </article>
-  `).join("") || `<p class="muted">검색 결과가 없습니다.</p>`;
+function openModal(theme, count, start){
+  current.theme = theme;
+  current.count = Number(count);
+  current.index = Number(start);   // 시작 슬라이드
+  current.start = Number(start);
+  renderModal();
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
 }
-searchInput?.addEventListener("input", renderNotices);
-filterSelect?.addEventListener("change", renderNotices);
-loadNotices();
-
-// ===== 신청결과: CSV 기반 시간표 조회 =====
-const form = document.getElementById("lookupForm");
-const resultArea = document.getElementById("resultArea");
-
-function norm(s){ return String(s || "").trim().toLowerCase(); }
-function parseCSV(text){
-  const rows=[]; let i=0, field="", inQ=false, row=[];
-  while(i<text.length){
-    const c=text[i];
-    if(inQ){
-      if(c==='"' && text[i+1]==='"'){ field+='"'; i++; }
-      else if(c==='"'){ inQ=false; }
-      else field+=c;
-    }else{
-      if(c==='"'){ inQ=true; }
-      else if(c===','){ row.push(field); field=""; }
-      else if(c==='\n'){ row.push(field); rows.push(row); row=[]; field=""; }
-      else if(c==='\r'){ }
-      else field+=c;
-    }
-    i++;
-  }
-  if(field.length>0 || row.length>0){ row.push(field); rows.push(row); }
-  return rows;
+function renderModal(){
+  const path = buildPath(current.theme, current.index);
+  modalImg.src = path;
+  modalImg.alt = '교실 설명 이미지';
 }
-function headerMap(headers){
-  const map = {};
-  headers.forEach((h,idx)=>{
-    const k=norm(h);
-    if(/학교|school/.test(k)) map.school = idx;
-    else if(/학년|grade/.test(k)) map.grade = idx;
-    else if(/반|class/.test(k)) map.class = idx;
-    else if(/이름|name/.test(k)) map.name = idx;
-    else if(/교시|slot|period/.test(k)) map.slot = idx;
-    else if(/시간|time/.test(k)) map.time = idx;
-    else if(/활동|activity|program|subject/.test(k)) map.activity = idx;
-    else if(/교실|room|장소/.test(k)) map.room = idx;
+function closeModal(){
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+  modalImg.src = '';
+}
+// prev/next는 실제 존재하는 파일 번호(폴더 내 존재)로 회전
+function toPrev(){
+  current.index--;
+  if(current.index < 1) current.index = current.count;
+  renderModal();
+}
+function toNext(){
+  current.index++;
+  if(current.index > current.count) current.index = 1;
+  renderModal();
+}
+
+prevBtn.addEventListener('click', toPrev);
+nextBtn.addEventListener('click', toNext);
+closeBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', e=>{
+  if(e.target === modal) closeModal();
+});
+document.addEventListener('keydown', e=>{
+  if(!modal.classList.contains('show')) return;
+  if(e.key === 'Escape') closeModal();
+  if(e.key === 'ArrowLeft') toPrev();
+  if(e.key === 'ArrowRight') toNext();
+});
+
+/* ===== 보기 버튼 바인딩 ===== */
+document.querySelectorAll('.view-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const theme = btn.dataset.theme;
+    const count = btn.dataset.count;
+    const start = btn.dataset.start || 1;
+    openModal(theme, count, start);
   });
-  return map;
-}
-function renderSchedule(rows){
-  if(!rows.length){
-    resultArea.innerHTML = `<p class="muted">조회 결과가 없습니다. 입력 정보를 확인해주세요.</p>`;
-    return;
-  }
-  rows.sort((a,b)=>{
-    const sa = a.slot ?? a.time ?? ""; const sb = b.slot ?? b.time ?? "";
-    return String(sa).localeCompare(String(sb), 'ko');
-  });
-  resultArea.innerHTML = rows.map(r=>`
-    <article class="card">
-      <h3>${r.slot ? `${r.slot}교시` : (r.time || "시간")}</h3>
-      <p><strong>활동</strong> ${r.activity || "-"}</p>
-      <p><strong>시간</strong> ${r.time || "-"}</p>
-      <p><strong>교실</strong> ${r.room || "-"}</p>
-    </article>
-  `).join("");
-}
+});
 
-async function lookup(e){
-  e?.preventDefault();
-  if(!form || !resultArea) return;
-  const q = {
-    school: norm(document.getElementById("school").value),
-    grade:  norm(document.getElementById("grade").value),
-    class:  norm(document.getElementById("class").value),
-    name:   norm(document.getElementById("name").value),
-  };
-  try{
-    const res = await fetch(TIMETABLE_CSV_PATH + `?t=${Date.now()}`);
-    if(!res.ok) throw new Error("CSV 파일을 불러오지 못했습니다.");
-    const text = await res.text();
-    const rows = parseCSV(text);
-    if(!rows.length) throw new Error("CSV 내용이 비어 있습니다.");
-    const headers = rows[0];
-    const map = headerMap(headers);
-    const data = rows.slice(1).map(r=>({
-      school:  r[map.school],
-      grade:   r[map.grade],
-      class:   r[map.class],
-      name:    r[map.name],
-      slot:    r[map.slot],
-      time:    r[map.time],
-      activity:r[map.activity],
-      room:    r[map.room],
-    }));
-    const matched = data.filter(x =>
-      norm(x.school)===q.school &&
-      norm(x.grade) === q.grade &&
-      norm(x.class) === q.class &&
-      norm(x.name)  === q.name
-    );
-    renderSchedule(matched);
-  }catch(err){
-    console.error(err);
-    resultArea.innerHTML = `
-      <p class="muted">데이터를 불러올 수 없습니다. <code>${TIMETABLE_CSV_PATH}</code>가 존재하는지 확인해주세요.</p>
-    `;
+/* ===== 초기 스크롤 보정 (새로고침 시 anchor 있을 때 튀는 문제 방지) ===== */
+window.addEventListener('load', ()=>{
+  if(location.hash){
+    const id = location.hash.replace('#','');
+    setTimeout(()=> smoothScrollTo(id), 30);
   }
-}
-form?.addEventListener("submit", lookup);
-document.getElementById("resetBtn")?.addEventListener("click", ()=>{
-  form.reset(); resultArea.innerHTML = "";
 });
