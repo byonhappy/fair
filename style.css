@@ -113,6 +113,8 @@ img{max-width:100%;display:block}
 .tree-foundation{background:#ecffed}
 .tree-focus{background:#fff0e8}
 .tree-onclass{background:#efe8ff}
+/* ⭐️ 놀이터 관 스타일 추가 */
+.tree-play{background:#e3f5e3}
 
 .tree-list{list-style:none;margin:0;padding:6px 14px 18px}
 .tree-list li{

@@ -35,21 +35,26 @@ btnTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}
    3. foundation  -> "3.%20foundation"
    4. focus       -> "4.%20focus"
    5. on_class    -> "5.%20on_class"
+   6. play        -> "6.%20play" 
 */
 const FOLDER = {
   future:     "classroom_introduce/1.%20future",
   happiness:  "classroom_introduce/2.%20happiness",
   foundation: "classroom_introduce/3.%20foundation",
   focus:      "classroom_introduce/4.%20focus",
-  on_class:   "classroom_introduce/5.%20on_class"
+  on_class:   "classroom_introduce/5.%20on_class",
+  // ⭐️ 놀이터 (자유 체험 수업) 추가
+  play:       "classroom_introduce/6.%20play" 
 };
-// 테마별 파일 이름 규칙 (ex. future1.jpg …)
+// 테마별 파일 이름 규칙 (ex. future1.PNG …)
 const FILE_PREFIX = {
   future: "future",
   happiness: "happiness",
   foundation: "foundation",
   focus: "focus",
-  on_class: "on_class"
+  on_class: "on_class",
+  // ⭐️ 놀이터 (자유 체험 수업) 추가
+  play: "play" 
 };
 
 const modal = document.getElementById('imgModal');
@@ -65,7 +70,8 @@ function buildPath(theme, idx){
   const number = idx;
   const folder = FOLDER[theme];
   const prefix = FILE_PREFIX[theme];
-  return `${folder}/${prefix}${number}.jpg`;
+  // ⭐️ 확장자를 .PNG로 통일하여 수정
+  return `${folder}/${prefix}${number}.PNG`;
 }
 function openModal(theme, count, start){
   current.theme = theme;
