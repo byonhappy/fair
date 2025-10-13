@@ -43,7 +43,7 @@ const FOLDER = {
   foundation: "classroom_introduce/3.%20foundation",
   focus:      "classroom_introduce/4.%20focus",
   on_class:   "classroom_introduce/5.%20on_class",
-  // ⭐️ 놀이터 (자유 체험 수업) 추가
+  // 놀이터 (자유 체험 수업) 추가
   play:       "classroom_introduce/6.%20play" 
 };
 // 테마별 파일 이름 규칙 (ex. future1.PNG …)
@@ -53,7 +53,7 @@ const FILE_PREFIX = {
   foundation: "foundation",
   focus: "focus",
   on_class: "on_class",
-  // ⭐️ 놀이터 (자유 체험 수업) 추가
+  // 놀이터 (자유 체험 수업) 추가
   play: "play" 
 };
 
@@ -70,7 +70,7 @@ function buildPath(theme, idx){
   const number = idx;
   const folder = FOLDER[theme];
   const prefix = FILE_PREFIX[theme];
-  // ⭐️ 확장자를 .PNG로 통일하여 수정
+  // 확장자를 .PNG로 통일하여 수정
   return `${folder}/${prefix}${number}.PNG`;
 }
 function openModal(theme, count, start){
