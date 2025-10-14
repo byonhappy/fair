@@ -113,8 +113,9 @@ img{max-width:100%;display:block}
 .tree-foundation{background:#ecffed}
 .tree-focus{background:#fff0e8}
 .tree-onclass{background:#efe8ff}
-/* 놀이터 관 스타일 유지 */
 .tree-play{background:#e3f5e3}
+/* 매점 관 배경색 추가 */
+.tree-store{background:#fbe9e9} 
 
 .tree-list{list-style:none;margin:0;padding:6px 14px 18px}
 .tree-list li{
@@ -135,7 +136,14 @@ img{max-width:100%;display:block}
   color:#fff;text-decoration:none;border-radius:16px;padding:14px 22px;
   font-weight:900; box-shadow:var(--shadow);
 }
-.btn-primary.lg{padding:16px 28px;font-size: clamp(16px,2vw,20px)}
+.btn-primary.lg{padding:16px 22px;font-size: clamp(16px,2vw,20px)}
+
+/* 버튼 커서 스타일 */
+.filter-btn {
+    cursor: pointer; /* 버튼 위에 마우스 커서가 올라가면 클릭 가능한 모양으로 변경 */
+}
+
+
 .btn-outline{
   display:inline-flex;align-items:center;justify-content:center;
   color:var(--accent-2);border:3px solid #70e4f0;background:#edfafe;
@@ -156,6 +164,18 @@ img{max-width:100%;display:block}
   grid-template-columns: minmax(min-content, 260px) minmax(min-content, 260px); 
   justify-content: flex-start; 
 }
+/* 교육 대상별 버튼 그룹 레이아웃 */
+.class-filter-buttons {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.class-filter-buttons .buttons-row {
+    /* 4개의 버튼을 너비에 맞춰 4등분하도록 수정 */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 12px;
+    justify-content: space-between;
+}
+
 
 /* 새로 추가된 텍스트 박스 스타일 */
 .apply-text-box {
@@ -197,6 +217,30 @@ img{max-width:100%;display:block}
   border-radius: 10px;
   margin-bottom: 20px;
 }
+
+/* 주의사항 박스 스타일 */
+.notice-box {
+    background: #fef7ec; /* 행복관 계열 색상 (attention) */
+    border: 3px solid #f9d597;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.notice-title {
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: #cc6600; /* 강조 색상 */
+    margin: 0 0 10px;
+    font-weight: 900;
+}
+.notice-text {
+    font-size: clamp(15px, 1.8vw, 20px);
+    color: var(--ink);
+    line-height: 1.6;
+    font-weight: 700;
+}
+
 
 /* ===== Footer Logo ===== */
 .logo-wrap{display:flex;justify-content:center;margin-top:18px}
@@ -240,6 +284,96 @@ img{max-width:100%;display:block}
 }
 .modal-nav.left{left:10px}
 .modal-nav.right{right:10px}
+
+/* ===== Modal List Content (새로 추가) ===== */
+.modal-content {
+    /* 모달 이미지와 동일한 위치에 표시 */
+    display: none; 
+    padding: 20px;
+    background: #fff;
+    max-width: min(980px, 94vw); 
+    max-height: 90vh;
+    overflow-y: auto; /* 내용이 길 경우 스크롤 */
+}
+.modal-list-title {
+    font-size: clamp(20px, 2.5vw, 30px);
+    text-align: center;
+    font-weight: 900;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--accent);
+}
+.modal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.modal-list-theme {
+    /* tree-head 스타일 재활용 */
+    padding: 12px 15px; 
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: clamp(16px, 2vw, 22px);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 10px rgba(0,0,0,.05);
+}
+.modal-list-theme .theme-name {
+    display: block;
+    padding-bottom: 5px;
+    border-bottom: 2px solid rgba(0,0,0,.1);
+}
+.modal-list-theme .theme-items {
+    list-style: none;
+    padding: 0;
+    margin-top: 8px;
+}
+.modal-list-theme .theme-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 500;
+    border-bottom: 1px dashed rgba(0,0,0,.1);
+}
+.modal-list-theme .theme-items li:last-child {
+    border-bottom: none;
+}
+.modal-list-theme .room-info {
+    font-weight: 700;
+    flex-basis: 15%;
+    color: var(--accent);
+}
+.modal-list-theme .class-name {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+}
+.modal-list-theme .time-info {
+    font-size: 0.9em;
+    color: var(--ink-2);
+    flex-basis: 15%;
+    text-align: right;
+    white-space: nowrap;
+}
+/* 관별 배경색 재활용 */
+.modal-list-theme.tree-future {background:#f4fbff}
+.modal-list-theme.tree-happiness {background:#fff7ec}
+.modal-list-theme.tree-foundation {background:#f5fff6}
+.modal-list-theme.tree-focus {background:#fff6f1}
+.modal-list-theme.tree-on_class {background:#f6f1ff}
+.modal-list-theme.tree-play {background:#f3f9f3}
+/* 매점 관 배경색 재활용 */
+.modal-list-theme.tree-store {background:#fef5f5}
+
+/* 기존 modal-body 내 img 태그 관련 스타일 (목록 모달 시 충돌 방지) */
+.modal-body img {
+  display:block; max-width:100%; max-height:90vh; object-fit:contain;
+}
 
 /* 연락처 */
 .contact-text{font-size:18px;margin:12px 0 8px}
