@@ -152,17 +152,9 @@ img{max-width:100%;display:block}
 .btn-outline.lg{padding:15px 26px;font-size: clamp(16px,2vw,20px)}
 
 /* 신청 영역 (텍스트 반영 및 레이아웃 조정) */
-.apply-row{
-  display:grid; 
-  /* 텍스트 박스 대신 버튼만 남기기 위해 flex로 전환 또는 grid 유지 */
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); 
-  gap:16px; 
-  align-items:start;
-  margin-bottom: 16px; 
-}
-.apply-row.buttons-row{
-  grid-template-columns: minmax(min-content, 260px) minmax(min-content, 260px); 
-  justify-content: flex-start; 
+/* 텍스트 설명 대신 이미지로 대체됨. */
+.apply-image-frame {
+  margin-bottom: 24px; /* 기존 apply-text-box의 하단 마진을 유지하여 버튼과의 간격 확보 */
 }
 /* 교육 대상별 버튼 그룹 레이아웃 */
 .class-filter-buttons {
@@ -174,48 +166,6 @@ img{max-width:100%;display:block}
     grid-template-columns: repeat(4, 1fr); 
     gap: 12px;
     justify-content: space-between;
-}
-
-
-/* 새로 추가된 텍스트 박스 스타일 */
-.apply-text-box {
-  background: var(--card); 
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 25px 20px;
-  margin-bottom: 24px;
-}
-.apply-text-box p {
-  line-height: 1.6;
-  font-size: clamp(14px, 1.5vw, 16px);
-  margin-bottom: 15px;
-}
-.step-title {
-  font-size: clamp(18px, 2.5vw, 24px);
-  color: var(--ink);
-  margin: 18px 0 10px;
-  font-weight: 900;
-  border-bottom: 2px solid var(--accent); /* 단계 구분을 위한 강조선 */
-  padding-bottom: 5px;
-}
-.info-list, .grade-table {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 20px 0;
-  font-size: clamp(14px, 1.4vw, 16px);
-}
-.info-list li, .grade-table li {
-  padding: 6px 0 6px 15px;
-  position: relative;
-  line-height: 1.4;
-  border-left: 3px solid var(--accent-2); /* 항목 구분을 위한 세로선 */
-  margin-bottom: 4px;
-}
-.grade-table {
-  background: #fcfcfc;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
 }
 
 /* 주의사항 박스 스타일 */
@@ -239,6 +189,16 @@ img{max-width:100%;display:block}
     color: var(--ink);
     line-height: 1.6;
     font-weight: 700;
+}
+
+/* 신청 방법 섹션에 사용되는 타이틀 (다른 곳에서도 쓰여서 유지) */
+.step-title {
+  font-size: clamp(18px, 2.5vw, 24px);
+  color: var(--ink);
+  margin: 18px 0 10px;
+  font-weight: 900;
+  border-bottom: 2px solid var(--accent); /* 단계 구분을 위한 강조선 */
+  padding-bottom: 5px;
 }
 
 

@@ -36,7 +36,6 @@ const AGE_GROUPS_DATA = {
         { theme: "happiness", name: "꿀벌과 나, 함께사는 지구", room: "3실", time: "30분" },
         { theme: "foundation", name: "나만의 AI 선생님", room: "2실", time: "30분" },
         { theme: "foundation", name: "반짝반짝 마음을 전하는 우리말", room: "3실", time: "30분" },
-        { theme: "foundation", name: "알쏭달쏭 재미있는 한글", room: "4실", time: "30분" },
         { theme: "foundation", name: "똑똑하게 지키는 안전", room: "6실", time: "30분" },
         { theme: "on_class", name: "초등학교 교실 AI를 품다", room: "3실", time: "30분" },
         { theme: "on_class", name: "미래씨의 초록 놀이터", room: "2실", time: "30분" },
@@ -203,7 +202,18 @@ function buildPath(theme, idx){
   const number = idx;
   const folder = FOLDER[theme];
   const prefix = FILE_PREFIX[theme];
-  return `${folder}/${prefix}${number}.PNG`;
+  let extension = '.JPG'; // 기본 확장자는 JPG로 설정
+
+  // PNG 확장자를 사용하는 특정 파일들 지정
+  if(
+    (theme === 'future' && number === 6) ||    // 미래관 6실
+    (theme === 'on_class' && number === 6) ||  // 온수업관 6실
+    (theme === 'play' && number === 2)         // 놀이터 2실
+  ) {
+      extension = '.PNG';
+  }
+
+  return `${folder}/${prefix}${number}${extension}`; 
 }
 
 function closeModal(){
