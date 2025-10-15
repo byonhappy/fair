@@ -201,6 +201,70 @@ img{max-width:100%;display:block}
   padding-bottom: 5px;
 }
 
+/* ===== 스케줄 테이블 스타일 추가 ===== */
+.schedule-table-wrap {
+  width: 100%;
+  max-width: 800px; /* 테이블 최대 너비 지정 */
+  margin: 0 auto;
+  overflow-x: auto; /* 모바일에서 가로 스크롤 가능하도록 */
+  background: var(--card); /* 배경색 지정 */
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.schedule-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+  font-size: clamp(15px, 1.8vw, 18px);
+}
+.schedule-table th {
+  padding: 15px 10px;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.time-header-am {
+  background: var(--accent); /* 오전 헤더 색상 */
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px; /* th가 1개이므로 양쪽 모두 둥글게 */
+}
+.time-header-pm {
+  background: var(--accent-2); /* 오후 헤더 색상 */
+  /* 아래쪽은 둥글게 하지 않음 (tbody가 이어지므로) */
+}
+.schedule-table td {
+  padding: 12px 10px;
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink-2);
+}
+.schedule-table tbody:last-child tr:last-child td {
+  border-bottom: none;
+}
+.time-period {
+  font-weight: 800;
+  color: var(--ink);
+  width: 25%;
+}
+.time-range {
+  font-weight: 500;
+  width: 50%;
+}
+.time-duration {
+  font-weight: 700;
+  color: var(--accent-2);
+  width: 25%;
+}
+.break-time {
+  background: #fff3e6; /* 행복관 계열 색상 (쉬는 시간 강조) */
+  font-weight: 700;
+}
+.break-time td {
+  padding: 15px;
+  color: #cc6600; /* 강조 텍스트 색상 */
+  border-bottom: 2px solid var(--line) !important;
+  border-top: 2px solid var(--line) !important;
+}
 
 /* ===== Footer Logo ===== */
 .logo-wrap{display:flex;justify-content:center;margin-top:18px}
