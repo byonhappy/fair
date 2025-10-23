@@ -76,6 +76,10 @@ img{max-width:100%;display:block}
   font-size: clamp(14px, 1.6vw, 20px);
 }
 .gnb-link:hover{color:var(--accent)}
+/* 🔔 GNB 방송 탭 강조 */
+.gnb-broadcast {
+  color: #ff5722 !important; /* 주황색으로 강조 */
+}
 
 /* ===== Common Section ===== */
 .section{padding: clamp(48px, 6vw, 72px) 0}
@@ -404,3 +408,56 @@ img{max-width:100%;display:block}
 
 /* 유틸 */
 .poster-frame + .section{margin-top:24px}
+
+/* 🔔 broadcast.html 전용 스타일 */
+.broadcast-body {
+  background-color: #0f1b2d; /* 어두운 배경 */
+  color: #c9f5f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Pretendard, sans-serif;
+  text-align: center;
+}
+.broadcast-title {
+  font-size: 3em;
+  font-weight: 900;
+  margin-bottom: 30px;
+  color: #18c2a6;
+}
+.broadcast-time {
+  font-size: 6em;
+  font-weight: 900;
+  letter-spacing: 5px;
+  margin-bottom: 40px;
+  text-shadow: 0 0 20px rgba(24, 194, 166, 0.5);
+}
+.schedule-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+.schedule-item {
+  background: #1b2b34;
+  padding: 10px 20px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+}
+.schedule-item.next-up {
+  background: #34495e;
+  border: 2px solid #18c2a6;
+  font-weight: bold;
+}
+.status-text {
+  font-size: 1.5em;
+  margin-top: 20px;
+  color: #ffcc00;
+}

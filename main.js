@@ -156,6 +156,8 @@ const AGE_GROUPS_DATA = {
   
   /* ===== GNB 클릭 ===== */
   document.querySelectorAll('.gnb-link').forEach(a=>{
+  // '방송' 탭은 새로운 창으로 열리므로 스크롤 이벤트에서 제외
+  if(a.classList.contains('gnb-broadcast')) return; 
   a.addEventListener('click', e=>{
     e.preventDefault();
     const target = a.getAttribute('data-target');

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2025 부여 On세진 행복교육 박람회 - 시종 방송</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* style.css에 추가된 broadcast-body, broadcast-time 등의 스타일이 여기서 적용됩니다. */
+    #startBtn {
+        /* 버튼 스타일 추가 */
+        background: #18c2a6;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.5em;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 30px;
+        transition: background 0.2s;
+    }
+    #startBtn:hover {
+        background: #14b4c7;
+    }
+    /* 버튼 클릭 전/후 상태를 위한 스타일 */
+    .initial-state #statusText,
+    .initial-state #scheduleList,
+    .initial-state #currentTime {
+        display: none;
+    }
+    .active-state #startBtn {
+        display: none;
+    }
+  </style>
+</head>
+<body class="broadcast-body initial-state">
+
+  <h1 class="broadcast-title">🔔 시종 방송 제어판</h1>
+  
+  <button id="startBtn">방송 시작 (클릭 후 작동)</button>
+
+  <div id="currentTime" class="broadcast-time">--:--:--</div>
+  <p id="statusText" class="status-text">시스템 준비 중...</p>
+  
+  <ul id="scheduleList" class="schedule-list">
+    </ul>
+
+  <audio id="startBell" src="start.mp3" preload="auto"></audio>
+  <audio id="endBell" src="end.mp3" preload="auto"></audio>
+
+  <script>
+    const SCHEDULE = [
+      { time: '09:25', type: 'start', label: '1교시 시작' },
+      { time: '09:55', type: 'end', label: '1교시 종료' },
+      { time: '10:10', type: 'start', label: '2교시 시작' },
+      { time: '10:40', type: 'end', label: '2교시 종료' },
+      { time: '10:55', type: 'start', label: '3교시 시작' },
+      { time: '11:25', type: 'end', label: '3교시 종료' },
+      { time: '11:40', type: 'start', label: '4교시 시작' },
+      { time: '12:10', type: 'end', label: '4교시 종료 / 점심시간 시작' },
+      { time: '13:20', type: 'start', label: '5교시 시작 / 점심시간 종료' },
+      { time: '13:50', type: 'end', label: '5교시 종료' },
+      { time: '14:05', type: 'start', label: '6교시 시작' },
+      { time: '14:35', type: 'end', label: '6교시 종료' },
+      { time: '14:50', type: 'start', label: '7교시 시작' },
+      { time: '15:20', type: 'end', label: '7교시 종료' },
+      { time: '15:35', type: 'start', label: '8교시 시작' },
+      { time: '16:05', type: 'end', label: '8교시 종료 / 행사 마감' },
+    ];
+
+    const bodyEl = document.querySelector('.broadcast-body');
+    const startBtn = document.getElementById('startBtn');
+    const currentTimeEl = document.getElementById('currentTime');
+    const statusTextEl = document.getElementById('statusText');
+    const scheduleListEl = document.getElementById('scheduleList');
+    const startBell = document.getElementById('startBell');
+    const endBell = document.getElementById('endBell');
+    
+    // 재생 중복 방지를 위한 플래그
+    let lastPlayedTime = null;
+    let clockInterval = null; // 인터벌 ID 저장
+
+    // 스케줄 목록을 HTML로 렌더링
+    function renderSchedule() {
+      scheduleListEl.innerHTML = SCHEDULE.map(item => `
+        <li class="schedule-item" data-time="${item.time}">
+          <span>${item.label}</span>
+          <span>${item.time}</span>
+        </li>
+      `).join('');
+    }
+
+    function checkAndPlayBell(timeString) {
+      // 분:초만 추출 (예: '09:25')
+      const checkTime = timeString.substring(0, 5); 
+      // 초가 '00'일 때만 종소리 체크
+      const isBellTime = timeString.substring(6, 8) === '00'; 
+      
+      if (lastPlayedTime === checkTime && isBellTime) {
+        return; 
+      }
+      
+      const bellEvent = SCHEDULE.find(item => item.time === checkTime);
+      
+      // 현재 시간을 기준으로 다음 이벤트 하이라이트
+      const now = new Date();
+      const nowTimeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      
+      let nextEvent = null;
+      document.querySelectorAll('.schedule-item').forEach(li => {
+        li.classList.remove('next-up');
+        const itemTime = li.dataset.time;
+        if (itemTime > nowTimeStr && !nextEvent) {
+            nextEvent = li;
+        }
+      });
+      
+      // 상태 텍스트 업데이트
+      if (nextEvent) {
+          nextEvent.classList.add('next-up');
+          const nextTime = nextEvent.querySelector('span:last-child').textContent;
+          const nextLabel = nextEvent.querySelector('span:first-child').textContent;
+          statusTextEl.textContent = `다음 방송: ${nextTime} ${nextLabel} (대기 중...)`;
+      } else {
+          statusTextEl.textContent = '오늘의 모든 시종 방송이 완료되었습니다.';
+      }
+      
+      // 종소리 재생 로직
+      if (bellEvent && isBellTime) {
+        if (bellEvent.type === 'start') {
+          startBell.currentTime = 0;
+          startBell.play().catch(e => console.error("Start bell play failed (Muted/Policy):", e));
+          statusTextEl.textContent = `▶️ ${bellEvent.label} (${checkTime}) - 시작 종소리 재생 중`;
+        } else if (bellEvent.type === 'end') {
+          endBell.currentTime = 0;
+          endBell.play().catch(e => console.error("End bell play failed (Muted/Policy):", e));
+          statusTextEl.textContent = `▶️ ${bellEvent.label} (${checkTime}) - 종료 종소리 재생 중`;
+        }
+        lastPlayedTime = checkTime; 
+        
+        // 5초 후 다음 이벤트 상태로 복귀
+        setTimeout(() => {
+            lastPlayedTime = null; 
+            updateClockAndBell();
+        }, 5000); 
+      }
+    }
+    
+    function updateClockAndBell() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      currentTimeEl.textContent = timeString;
+      
+      checkAndPlayBell(timeString);
+    }
+    
+    function startBroadcast() {
+        // 1. 상태를 활성 모드로 변경하여 시계와 일정을 표시
+        bodyEl.classList.remove('initial-state');
+        bodyEl.classList.add('active-state');
+        
+        // 2. 오디오를 재생하여 브라우저의 재생 권한을 획득
+        // (Chrome 정책 상 play()를 호출해야 권한이 완전히 부여됨)
+        startBell.volume = 0; // 무음으로 권한 획득 시도
+        startBell.play().then(() => {
+            startBell.pause();
+            startBell.volume = 1; // 볼륨 복구
+            console.log("Audio playback access granted.");
+        }).catch(e => {
+            console.warn("Audio playback access failed. Policy may be strict:", e);
+        });
+        
+        // 3. 클럭 및 방송 로직 시작
+        renderSchedule();
+        updateClockAndBell();
+        clockInterval = setInterval(updateClockAndBell, 1000);
+    }
+
+    // "방송 시작" 버튼 클릭 시 모든 로직 시작
+    startBtn.addEventListener('click', startBroadcast);
+
+  </script>
+
+</body>
+</html>
